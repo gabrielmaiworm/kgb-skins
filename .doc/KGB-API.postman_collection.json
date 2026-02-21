@@ -1,0 +1,1077 @@
+{
+  "info": {
+    "_postman_id": "kgb-api-collection",
+    "name": "KGB API",
+    "description": "Collection completa da API KGB com todas as rotas organizadas por módulos",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+
+  "item": [
+    {
+      "name": "App",
+      "item": [
+        {
+          "name": "Hello World",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/",
+              "host": ["{{baseUrl}}"],
+              "path": [""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@email.com\",\n  \"password\": \"123456\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    if (jsonData.access_token) {",
+                  "        pm.collectionVariables.set(\"token\", jsonData.access_token);",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login com CPF",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"document\": \"12345678901\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login/cpf",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login", "cpf"]
+            },
+            "description": "Login apenas com CPF (apenas para usuários públicos sem senha)"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    if (jsonData.access_token) {",
+                  "        pm.collectionVariables.set(\"token\", jsonData.access_token);",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refresh_token\": \"seu_refresh_token_aqui\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/refresh",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "refresh"]
+            }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refresh_token\": \"seu_refresh_token_aqui\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/logout",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "logout"]
+            }
+          }
+        },
+        {
+          "name": "Forgot Password",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"gabriel@email.com\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/forgot-password",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "forgot-password"]
+            }
+          }
+        },
+        {
+          "name": "Reset Password",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"gabriel@email.com\",\n  \"code\": \"123456\",\n  \"newPassword\": \"123456\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/reset-password",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "reset-password"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Create Public User",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Gabriel Gomes\",\n  \"email\": \"gabriel@example.com\",\n  \"phone\": \"+5511999999999\",\n  \"document\": \"12345678901\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/create-public",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "create-public"]
+            }
+          }
+        },
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Gabriel Gomes\",\n  \"email\": \"gabriel@example.com\",\n  \"password\": \"123456\",\n  \"phone\": \"+5511999999999\",\n  \"document\": \"12345678901\",\n  \"isActive\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/create",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "create"]
+            }
+          }
+        },
+        {
+          "name": "Create Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Admin User\",\n  \"email\": \"admin@example.com\",\n  \"password\": \"123456\",\n  \"phone\": \"+5511999999999\",\n  \"document\": \"12345678901\",\n  \"role\": \"admin\",\n  \"isActive\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/create-admin",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "create-admin"]
+            }
+          }
+        },
+        {
+          "name": "List Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/list?page=1&limit=10&search=&orderBy=asc",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "list"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Número da página"
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Itens por página"
+                },
+                {
+                  "key": "search",
+                  "value": "",
+                  "description": "Busca por nome/email",
+                  "disabled": true
+                },
+                {
+                  "key": "orderBy",
+                  "value": "asc",
+                  "description": "Ordenação (asc/desc)"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Find User By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/find-by-id/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "find-by-id", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "user-uuid-here"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Gabriel Gomes Atualizado\",\n  \"email\": \"gabriel.novo@example.com\",\n  \"phone\": \"+5511888888888\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/update/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "update", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "user-uuid-here"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/delete/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "delete", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "user-uuid-here"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Activate/Inactive User",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"isActive\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/activate-and-inactive/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "activate-and-inactive", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "user-uuid-here"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Campaigns",
+      "item": [
+        {
+          "name": "Create Campaign (with files)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "Rifa iPhone 15 Pro",
+                  "type": "text"
+                },
+                {
+                  "key": "subtitle",
+                  "value": "Última oportunidade!",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Descrição da campanha",
+                  "type": "text"
+                },
+                {
+                  "key": "coverImage",
+                  "type": "file",
+                  "src": [],
+                  "description": "Imagem de capa (opcional - use coverImageUrl se preferir URL)"
+                },
+                {
+                  "key": "coverImageUrl",
+                  "value": "",
+                  "type": "text",
+                  "disabled": true,
+                  "description": "URL da imagem de capa (alternativa ao arquivo)"
+                },
+                {
+                  "key": "gallery",
+                  "type": "file",
+                  "src": [],
+                  "description": "Imagens da galeria (máx 10 - use galleryUrls se preferir URLs)"
+                },
+                {
+                  "key": "galleryUrls",
+                  "value": "[]",
+                  "type": "text",
+                  "disabled": true,
+                  "description": "Array JSON de URLs da galeria (alternativa aos arquivos)"
+                },
+                {
+                  "key": "itemPrice",
+                  "value": "1000.00",
+                  "type": "text"
+                },
+                {
+                  "key": "totalTickets",
+                  "value": "100",
+                  "type": "text"
+                },
+                {
+                  "key": "maintenancePrice",
+                  "value": "30.00",
+                  "type": "text"
+                },
+                {
+                  "key": "itemCondition",
+                  "value": "Novo",
+                  "type": "text"
+                },
+                {
+                  "key": "itemFloat",
+                  "value": "0.12345678",
+                  "type": "text"
+                },
+                {
+                  "key": "status",
+                  "value": "PENDING",
+                  "type": "text",
+                  "description": "PENDING, ACTIVE, PAUSED, COMPLETED, CANCELED"
+                },
+                {
+                  "key": "drawDate",
+                  "value": "2024-12-31T23:59:59Z",
+                  "type": "text"
+                },
+                {
+                  "key": "mode",
+                  "value": "MANUAL",
+                  "type": "text",
+                  "description": "MANUAL ou RANDOM"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/campaigns",
+              "host": ["{{baseUrl}}"],
+              "path": ["campaigns"]
+            }
+          }
+        },
+        {
+          "name": "Create Campaign (with URLs)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "Rifa iPhone 15 Pro",
+                  "type": "text"
+                },
+                {
+                  "key": "subtitle",
+                  "value": "Última oportunidade!",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Descrição da campanha",
+                  "type": "text"
+                },
+                {
+                  "key": "coverImageUrl",
+                  "value": "https://example.com/image.jpg2",
+                  "type": "text",
+                  "description": "URL da imagem de capa"
+                },
+                {
+                  "key": "galleryUrls",
+                  "value": "[\"https://example.com/image1.jpg\", \"https://example.com/image2.jpg\"]",
+                  "type": "text",
+                  "description": "Array JSON de URLs da galeria"
+                },
+                {
+                  "key": "itemPrice",
+                  "value": "1000.00",
+                  "type": "text"
+                },
+                {
+                  "key": "totalTickets",
+                  "value": "100",
+                  "type": "text"
+                },
+                {
+                  "key": "maintenancePrice",
+                  "value": "30.00",
+                  "type": "text"
+                },
+                {
+                  "key": "itemCondition",
+                  "value": "Novo",
+                  "type": "text"
+                },
+                {
+                  "key": "itemFloat",
+                  "value": "0.12345678",
+                  "type": "text"
+                },
+                {
+                  "key": "status",
+                  "value": "PENDING",
+                  "type": "text",
+                  "description": "PENDING, ACTIVE, PAUSED, COMPLETED, CANCELED"
+                },
+                {
+                  "key": "drawDate",
+                  "value": "2024-12-31T23:59:59Z",
+                  "type": "text"
+                },
+                {
+                  "key": "mode",
+                  "value": "MANUAL",
+                  "type": "text",
+                  "description": "MANUAL ou RANDOM"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/campaigns",
+              "host": ["{{baseUrl}}"],
+              "path": ["campaigns"]
+            }
+          }
+        },
+        {
+          "name": "List Campaigns",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/campaigns?page=1&limit=10&search=&status=",
+              "host": ["{{baseUrl}}"],
+              "path": ["campaigns"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Número da página"
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Itens por página"
+                },
+                {
+                  "key": "search",
+                  "value": "",
+                  "description": "Busca por título/subtítulo",
+                  "disabled": true
+                },
+                {
+                  "key": "status",
+                  "value": "",
+                  "description": "Filtrar por status (PENDING, ACTIVE, PAUSED, COMPLETED, CANCELED)",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Campaign By ID",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/campaigns/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["campaigns", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "campaign-uuid-here"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Campaign (with files)",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "Rifa iPhone 15 Pro Atualizada",
+                  "type": "text"
+                },
+                {
+                  "key": "subtitle",
+                  "value": "Nova oportunidade!",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "coverImage",
+                  "type": "file",
+                  "src": [],
+                  "description": "Nova imagem de capa (opcional)"
+                },
+                {
+                  "key": "coverImageUrl",
+                  "value": "",
+                  "type": "text",
+                  "disabled": true,
+                  "description": "URL da nova imagem de capa (alternativa ao arquivo)"
+                },
+                {
+                  "key": "gallery",
+                  "type": "file",
+                  "src": [],
+                  "description": "Novas imagens da galeria (máx 10)"
+                },
+                {
+                  "key": "galleryUrls",
+                  "value": "[]",
+                  "type": "text",
+                  "disabled": true,
+                  "description": "Array JSON de URLs da galeria (alternativa aos arquivos)"
+                },
+                {
+                  "key": "itemPrice",
+                  "value": "",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "totalTickets",
+                  "value": "",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "maintenancePrice",
+                  "value": "",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "itemCondition",
+                  "value": "",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "itemFloat",
+                  "value": "",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "status",
+                  "value": "ACTIVE",
+                  "type": "text",
+                  "description": "PENDING, ACTIVE, PAUSED, COMPLETED, CANCELED"
+                },
+                {
+                  "key": "drawDate",
+                  "value": "",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "mode",
+                  "value": "",
+                  "type": "text",
+                  "disabled": true,
+                  "description": "MANUAL ou RANDOM"
+                },
+                {
+                  "key": "winnerTicket",
+                  "value": "",
+                  "type": "text",
+                  "disabled": true
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/campaigns/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["campaigns", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "campaign-uuid-here"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Campaign (with URLs)",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "Rifa iPhone 15 Pro Atualizada",
+                  "type": "text"
+                },
+                {
+                  "key": "subtitle",
+                  "value": "Nova oportunidade!",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "coverImageUrl",
+                  "value": "https://example.com/new-image.jpg",
+                  "type": "text",
+                  "description": "URL da nova imagem de capa"
+                },
+                {
+                  "key": "galleryUrls",
+                  "value": "[\"https://example.com/image1.jpg\", \"https://example.com/image2.jpg\"]",
+                  "type": "text",
+                  "description": "Array JSON de URLs da galeria"
+                },
+                {
+                  "key": "status",
+                  "value": "ACTIVE",
+                  "type": "text",
+                  "description": "PENDING, ACTIVE, PAUSED, COMPLETED, CANCELED"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/campaigns/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["campaigns", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "campaign-uuid-here"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Buy Tickets (Manual Mode)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"numbers\": [1, 5, 10, 15, 20]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/campaigns/:id/buy-tickets",
+              "host": ["{{baseUrl}}"],
+              "path": ["campaigns", ":id", "buy-tickets"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "campaign-uuid-here"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Buy Tickets (Random Mode)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quantity\": 5\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/campaigns/:id/buy-tickets",
+              "host": ["{{baseUrl}}"],
+              "path": ["campaigns", ":id", "buy-tickets"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "campaign-uuid-here"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Confirm Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ticketIds\": [\"ticket-uuid-1\", \"ticket-uuid-2\", \"ticket-uuid-3\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/campaigns/:id/confirm-payment",
+              "host": ["{{baseUrl}}"],
+              "path": ["campaigns", ":id", "confirm-payment"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "campaign-uuid-here"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "My Orders (Histórico de Tickets Pagos)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/campaigns/tickets/my-orders?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["campaigns", "tickets", "my-orders"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Número da página"
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Itens por página"
+                }
+              ]
+            },
+            "description": "Retorna histórico de tickets pagos do usuário autenticado com informações completas da campanha e pagamento"
+          }
+        },
+        {
+          "name": "Get Campaign Orders (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/campaigns/:id/orders?status=",
+              "host": ["{{baseUrl}}"],
+              "path": ["campaigns", ":id", "orders"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "campaign-uuid-here"
+                }
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "",
+                  "description": "Filtrar por status (PAID, RESERVED) - opcional, padrão retorna ambos",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Lista todos os pedidos (tickets pagos e reservados) de uma campanha com informações completas dos usuários. Apenas para admin."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Logs",
+      "item": [
+        {
+          "name": "List Logs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/logs/list?page=1&limit=10&role=&email=&name=&route=&dateStart=&dateEnd=&dateExact=",
+              "host": ["{{baseUrl}}"],
+              "path": ["logs", "list"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Número da página"
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Itens por página"
+                },
+                {
+                  "key": "role",
+                  "value": "",
+                  "description": "Filtrar por role",
+                  "disabled": true
+                },
+                {
+                  "key": "email",
+                  "value": "",
+                  "description": "Filtrar por email",
+                  "disabled": true
+                },
+                {
+                  "key": "name",
+                  "value": "",
+                  "description": "Filtrar por nome",
+                  "disabled": true
+                },
+                {
+                  "key": "route",
+                  "value": "",
+                  "description": "Filtrar por rota",
+                  "disabled": true
+                },
+                {
+                  "key": "dateStart",
+                  "value": "",
+                  "description": "Data inicial (YYYY-MM-DD)",
+                  "disabled": true
+                },
+                {
+                  "key": "dateEnd",
+                  "value": "",
+                  "description": "Data final (YYYY-MM-DD)",
+                  "disabled": true
+                },
+                {
+                  "key": "dateExact",
+                  "value": "",
+                  "description": "Data exata (YYYY-MM-DD)",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payments",
+      "item": [
+        {
+          "name": "Webhook EFI",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pix\": [\n    {\n      \"endToEndId\": \"E12345678202401011200123456789012345\",\n      \"txid\": \"transaction-id-here\",\n      \"chave\": \"sua-chave-pix\",\n      \"valor\": \"50.00\",\n      \"horario\": \"2024-01-01T12:00:00Z\",\n      \"infoPagador\": \"Pagamento de tickets\"\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/payments/webhook",
+              "host": ["{{baseUrl}}"],
+              "path": ["payments", "webhook"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

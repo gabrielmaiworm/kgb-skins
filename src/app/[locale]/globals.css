@@ -1,0 +1,684 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* === KGB Brand Colors === */
+    --kgb-red: 0 100% 45%; /* #E60000 */
+    --kgb-red-dark: 0 100% 27%; /* #8B0000 */
+    --kgb-gold: 51 100% 50%; /* #FFD700 */
+    --kgb-gold-dark: 43 72% 37%; /* #B8860B */
+    --kgb-black: 0 0% 10%; /* #1a1a1a */
+
+    /* === Base Colors === */
+    --background: 0 0% 0%; /* Black */
+    --foreground: 0 0% 100%; /* White */
+    --card: 0 0% 5%; /* Quase preto */
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 5%;
+    --popover-foreground: 0 0% 100%;
+
+    /* === Glass Morphism === */
+    --glass-bg-from: 0 100% 45% / 0.2; /* kgb-red/20 */
+    --glass-bg-via: 51 100% 50% / 0.1; /* kgb-gold/10 */
+    --glass-bg-to: 0 100% 45% / 0.2; /* kgb-red/20 */
+    --glass-blur: 0 0% 0% / 0.4; /* black/40 */
+    --glass-border: 0 0% 100% / 0.1; /* white/10 */
+
+    /* === Status Colors (Quota System) === */
+    /* Livre (Verde) */
+    --quota-livre-bg: 142 71% 45% / 0.2; /* green-500/20 */
+    --quota-livre-border: 142 71% 45% / 0.5; /* green-500/50 */
+    --quota-livre-text: 142 76% 36%; /* green-400 */
+    --quota-livre-hover: 142 71% 45% / 0.3; /* green-500/30 */
+
+    /* Reservado (Ciano) */
+    --quota-reservado-bg: 189 94% 43% / 0.2; /* cyan-500/20 */
+    --quota-reservado-border: 189 94% 43% / 0.5; /* cyan-500/50 */
+    --quota-reservado-text: 186 94% 47%; /* cyan-400 */
+
+    /* Pago (Vermelho) */
+    --quota-pago-bg: 0 84% 60% / 0.2; /* red-500/20 */
+    --quota-pago-border: 0 84% 60% / 0.5; /* red-500/50 */
+    --quota-pago-text: 0 91% 71%; /* red-400 */
+
+    /* Selecionado (Gold) */
+    --quota-selected-bg: 51 100% 50%; /* kgb-gold */
+    --quota-selected-border: 51 100% 50%; /* kgb-gold */
+    --quota-selected-text: 0 0% 0%; /* black */
+
+    /* === Text Variants === */
+    --text-muted: 0 0% 100% / 0.6; /* white/60 */
+    --text-subtle: 0 0% 100% / 0.7; /* white/70 */
+    --text-secondary: 0 0% 100% / 0.8; /* white/80 */
+
+    /* === UI States === */
+    --border: 0 0% 100% / 0.1;
+    --input: 0 0% 100% / 0.1;
+    --ring: 51 100% 50%; /* kgb-gold */
+
+    /* Cores secundárias */
+    --brand-secondary-dark: 34, 100%, 32%; /* laranja queimado escuro */
+    --brand-secondary-mid: 34, 100%, 45%; /* laranja médio */
+    --brand-secondary-light: 34, 100%, 70%; /* laranja claro */
+    --brand-secondary-lightest: 34, 100%, 90%; /* laranja bem claro */
+
+    /* Cores secundárias com opacidade */
+    --brand-secondary-dark-5: 34, 100%, 32%, 0.05;
+    --brand-secondary-dark-10: 34, 100%, 32%, 0.1;
+    --brand-secondary-dark-20: 34, 100%, 32%, 0.2;
+    --brand-secondary-dark-30: 34, 100%, 32%, 0.3;
+    --brand-secondary-dark-40: 34, 100%, 32%, 0.4;
+    --brand-secondary-dark-50: 34, 100%, 32%, 0.5;
+    --brand-secondary-dark-60: 34, 100%, 32%, 0.6;
+    --brand-secondary-dark-70: 34, 100%, 32%, 0.7;
+    --brand-secondary-dark-80: 34, 100%, 32%, 0.8;
+    --brand-secondary-dark-90: 34, 100%, 32%, 0.9;
+
+    --brand-secondary-light-5: 34, 100%, 70%, 0.05;
+    --brand-secondary-light-10: 34, 100%, 70%, 0.1;
+    --brand-secondary-light-20: 34, 100%, 70%, 0.2;
+    --brand-secondary-light-30: 34, 100%, 70%, 0.3;
+    --brand-secondary-light-40: 34, 100%, 70%, 0.4;
+    --brand-secondary-light-50: 34, 100%, 70%, 0.5;
+    --brand-secondary-light-60: 34, 100%, 70%, 0.6;
+    --brand-secondary-light-70: 34, 100%, 70%, 0.7;
+    --brand-secondary-light-80: 34, 100%, 70%, 0.8;
+    --brand-secondary-light-90: 34, 100%, 70%, 0.9;
+
+    /* Cores funcionais de sucesso */
+    --funcional-success-primary: 151, 86%, 28%; /* igual ao brand principal */
+    --funcional-success-secondary: 151, 70%, 38%;
+
+    /* Cores funcionais de sucesso com opacidade */
+    --funcional-success-primary-5: 151, 86%, 28%, 0.05;
+    --funcional-success-primary-10: 151, 86%, 28%, 0.1;
+    --funcional-success-primary-20: 151, 86%, 28%, 0.2;
+    --funcional-success-primary-30: 151, 86%, 28%, 0.3;
+    --funcional-success-primary-40: 151, 86%, 28%, 0.4;
+    --funcional-success-primary-50: 151, 86%, 28%, 0.5;
+    --funcional-success-primary-60: 151, 86%, 28%, 0.6;
+    --funcional-success-primary-70: 151, 86%, 28%, 0.7;
+    --funcional-success-primary-80: 151, 86%, 28%, 0.8;
+    --funcional-success-primary-90: 151, 86%, 28%, 0.9;
+
+    /* Cores funcionais de aviso */
+    --funcional-warning-dark: 34, 100%, 32%;
+    --funcional-warning-mid: 34, 100%, 45%;
+
+    /* Cores funcionais de aviso com opacidade */
+    --funcional-warning-dark-5: 34, 100%, 32%, 0.05;
+    --funcional-warning-dark-10: 34, 100%, 32%, 0.1;
+    --funcional-warning-dark-20: 34, 100%, 32%, 0.2;
+    --funcional-warning-dark-30: 34, 100%, 32%, 0.3;
+    --funcional-warning-dark-40: 34, 100%, 32%, 0.4;
+    --funcional-warning-dark-50: 34, 100%, 32%, 0.5;
+    --funcional-warning-dark-60: 34, 100%, 32%, 0.6;
+    --funcional-warning-dark-70: 34, 100%, 32%, 0.7;
+    --funcional-warning-dark-80: 34, 100%, 32%, 0.8;
+    --funcional-warning-dark-90: 34, 100%, 32%, 0.9;
+
+    --funcional-warning-mid-5: 34, 100%, 45%, 0.05;
+    --funcional-warning-mid-10: 34, 100%, 45%, 0.1;
+    --funcional-warning-mid-20: 34, 100%, 45%, 0.2;
+    --funcional-warning-mid-30: 34, 100%, 45%, 0.3;
+    --funcional-warning-mid-40: 34, 100%, 45%, 0.4;
+    --funcional-warning-mid-50: 34, 100%, 45%, 0.5;
+    --funcional-warning-mid-60: 34, 100%, 45%, 0.6;
+    --funcional-warning-mid-70: 34, 100%, 45%, 0.7;
+    --funcional-warning-mid-80: 34, 100%, 45%, 0.8;
+    --funcional-warning-mid-90: 34, 100%, 45%, 0.9;
+
+    /* Cores funcionais de erro */
+    --funcional-error-dark: 0, 80%, 40%; /* vermelho escuro */
+    --funcional-error-mid: 0, 80%, 55%; /* vermelho médio */
+    --funcional-error-light: 0, 80%, 70%; /* vermelho claro */
+    --funcional-error-lightest: 0, 80%, 85%; /* vermelho bem claro */
+
+    /* Cores funcionais de erro com opacidade */
+    --funcional-error-dark-5: 0, 80%, 40%, 0.05;
+    --funcional-error-dark-10: 0, 80%, 40%, 0.1;
+    --funcional-error-dark-20: 0, 80%, 40%, 0.2;
+    --funcional-error-dark-30: 0, 80%, 40%, 0.3;
+    --funcional-error-dark-40: 0, 80%, 40%, 0.4;
+    --funcional-error-dark-50: 0, 80%, 40%, 0.5;
+    --funcional-error-dark-60: 0, 80%, 40%, 0.6;
+    --funcional-error-dark-70: 0, 80%, 40%, 0.7;
+    --funcional-error-dark-80: 0, 80%, 40%, 0.8;
+    --funcional-error-dark-90: 0, 80%, 40%, 0.9;
+
+    --funcional-error-mid-5: 0, 80%, 55%, 0.05;
+    --funcional-error-mid-10: 0, 80%, 55%, 0.1;
+    --funcional-error-mid-20: 0, 80%, 55%, 0.2;
+    --funcional-error-mid-30: 0, 80%, 55%, 0.3;
+    --funcional-error-mid-40: 0, 80%, 55%, 0.4;
+    --funcional-error-mid-50: 0, 80%, 55%, 0.5;
+    --funcional-error-mid-60: 0, 80%, 55%, 0.6;
+    --funcional-error-mid-70: 0, 80%, 55%, 0.7;
+    --funcional-error-mid-80: 0, 80%, 55%, 0.8;
+    --funcional-error-mid-90: 0, 80%, 55%, 0.9;
+
+    /* Cores funcionais de informação */
+    --funcional-info-dark: 210, 60%, 32%; /* azul escuro */
+    --funcional-info-mid: 210, 60%, 45%;
+
+    /* Cores funcionais de informação com opacidade */
+    --funcional-info-dark-5: 210, 60%, 32%, 0.05;
+    --funcional-info-dark-10: 210, 60%, 32%, 0.1;
+    --funcional-info-dark-20: 210, 60%, 32%, 0.2;
+    --funcional-info-dark-30: 210, 60%, 32%, 0.3;
+    --funcional-info-dark-40: 210, 60%, 32%, 0.4;
+    --funcional-info-dark-50: 210, 60%, 32%, 0.5;
+    --funcional-info-dark-60: 210, 60%, 32%, 0.6;
+    --funcional-info-dark-70: 210, 60%, 32%, 0.7;
+    --funcional-info-dark-80: 210, 60%, 32%, 0.8;
+    --funcional-info-dark-90: 210, 60%, 32%, 0.9;
+
+    --funcional-info-mid-5: 210, 60%, 45%, 0.05;
+    --funcional-info-mid-10: 210, 60%, 45%, 0.1;
+    --funcional-info-mid-20: 210, 60%, 45%, 0.2;
+    --funcional-info-mid-30: 210, 60%, 45%, 0.3;
+    --funcional-info-mid-40: 210, 60%, 45%, 0.4;
+    --funcional-info-mid-50: 210, 60%, 45%, 0.5;
+    --funcional-info-mid-60: 210, 60%, 45%, 0.6;
+    --funcional-info-mid-70: 210, 60%, 45%, 0.7;
+    --funcional-info-mid-80: 210, 60%, 45%, 0.8;
+    --funcional-info-mid-90: 210, 60%, 45%, 0.9;
+
+    /* Cores terciárias */
+    --brand-tertiary-dark: 280, 75%, 35%; /* roxo escuro */
+    --brand-tertiary-mid: 280, 75%, 50%; /* roxo médio */
+    --brand-tertiary-light: 280, 75%, 65%; /* roxo claro */
+    --brand-tertiary-lightest: 280, 75%, 80%; /* roxo bem claro */
+
+    /* Cores terciárias com opacidade */
+    --brand-tertiary-dark-5: 280, 75%, 35%, 0.05;
+    --brand-tertiary-dark-10: 280, 75%, 35%, 0.1;
+    --brand-tertiary-dark-20: 280, 75%, 35%, 0.2;
+    --brand-tertiary-dark-30: 280, 75%, 35%, 0.3;
+    --brand-tertiary-dark-40: 280, 75%, 35%, 0.4;
+    --brand-tertiary-dark-50: 280, 75%, 35%, 0.5;
+    --brand-tertiary-dark-60: 280, 75%, 35%, 0.6;
+    --brand-tertiary-dark-70: 280, 75%, 35%, 0.7;
+    --brand-tertiary-dark-80: 280, 75%, 35%, 0.8;
+    --brand-tertiary-dark-90: 280, 75%, 35%, 0.9;
+
+    --brand-tertiary-mid-5: 280, 75%, 50%, 0.05;
+    --brand-tertiary-mid-10: 280, 75%, 50%, 0.1;
+    --brand-tertiary-mid-20: 280, 75%, 50%, 0.2;
+    --brand-tertiary-mid-30: 280, 75%, 50%, 0.3;
+    --brand-tertiary-mid-40: 280, 75%, 50%, 0.4;
+    --brand-tertiary-mid-50: 280, 75%, 50%, 0.5;
+    --brand-tertiary-mid-60: 280, 75%, 50%, 0.6;
+    --brand-tertiary-mid-70: 280, 75%, 50%, 0.7;
+    --brand-tertiary-mid-80: 280, 75%, 50%, 0.8;
+    --brand-tertiary-mid-90: 280, 75%, 50%, 0.9;
+
+    --brand-tertiary-light-5: 280, 75%, 65%, 0.05;
+    --brand-tertiary-light-10: 280, 75%, 65%, 0.1;
+    --brand-tertiary-light-20: 280, 75%, 65%, 0.2;
+    --brand-tertiary-light-30: 280, 75%, 65%, 0.3;
+    --brand-tertiary-light-40: 280, 75%, 65%, 0.4;
+    --brand-tertiary-light-50: 280, 75%, 65%, 0.5;
+    --brand-tertiary-light-60: 280, 75%, 65%, 0.6;
+    --brand-tertiary-light-70: 280, 75%, 65%, 0.7;
+    --brand-tertiary-light-80: 280, 75%, 65%, 0.8;
+    --brand-tertiary-light-90: 280, 75%, 65%, 0.9;
+
+    /* Cores quaternárias */
+    --brand-quaternary-dark: 190, 85%, 30%; /* azul-esverdeado escuro */
+    --brand-quaternary-mid: 190, 85%, 45%; /* azul-esverdeado médio */
+    --brand-quaternary-light: 190, 85%, 60%; /* azul-esverdeado claro */
+    --brand-quaternary-lightest: 190, 85%, 75%; /* azul-esverdeado bem claro */
+
+    /* Cores quaternárias com opacidade */
+    --brand-quaternary-dark-5: 190, 85%, 30%, 0.05;
+    --brand-quaternary-dark-10: 190, 85%, 30%, 0.1;
+    --brand-quaternary-dark-20: 190, 85%, 30%, 0.2;
+    --brand-quaternary-dark-30: 190, 85%, 30%, 0.3;
+    --brand-quaternary-dark-40: 190, 85%, 30%, 0.4;
+    --brand-quaternary-dark-50: 190, 85%, 30%, 0.5;
+    --brand-quaternary-dark-60: 190, 85%, 30%, 0.6;
+    --brand-quaternary-dark-70: 190, 85%, 30%, 0.7;
+    --brand-quaternary-dark-80: 190, 85%, 30%, 0.8;
+    --brand-quaternary-dark-90: 190, 85%, 30%, 0.9;
+
+    --brand-quaternary-mid-5: 190, 85%, 45%, 0.05;
+    --brand-quaternary-mid-10: 190, 85%, 45%, 0.1;
+    --brand-quaternary-mid-20: 190, 85%, 45%, 0.2;
+    --brand-quaternary-mid-30: 190, 85%, 45%, 0.3;
+    --brand-quaternary-mid-40: 190, 85%, 45%, 0.4;
+    --brand-quaternary-mid-50: 190, 85%, 45%, 0.5;
+    --brand-quaternary-mid-60: 190, 85%, 45%, 0.6;
+    --brand-quaternary-mid-70: 190, 85%, 45%, 0.7;
+    --brand-quaternary-mid-80: 190, 85%, 45%, 0.8;
+    --brand-quaternary-mid-90: 190, 85%, 45%, 0.9;
+
+    --brand-quaternary-light-5: 190, 85%, 60%, 0.05;
+    --brand-quaternary-light-10: 190, 85%, 60%, 0.1;
+    --brand-quaternary-light-20: 190, 85%, 60%, 0.2;
+    --brand-quaternary-light-30: 190, 85%, 60%, 0.3;
+    --brand-quaternary-light-40: 190, 85%, 60%, 0.4;
+    --brand-quaternary-light-50: 190, 85%, 60%, 0.5;
+    --brand-quaternary-light-60: 190, 85%, 60%, 0.6;
+    --brand-quaternary-light-70: 190, 85%, 60%, 0.7;
+    --brand-quaternary-light-80: 190, 85%, 60%, 0.8;
+    --brand-quaternary-light-90: 190, 85%, 60%, 0.9;
+
+    /* Cores quinárias */
+    --brand-quinary-dark: 120, 65%, 25%; /* verde escuro */
+    --brand-quinary-mid: 120, 65%, 40%; /* verde médio */
+    --brand-quinary-light: 120, 65%, 55%; /* verde claro */
+    --brand-quinary-lightest: 120, 65%, 70%; /* verde bem claro */
+
+    /* Cores quinárias com opacidade */
+    --brand-quinary-dark-5: 120, 65%, 25%, 0.05;
+    --brand-quinary-dark-10: 120, 65%, 25%, 0.1;
+    --brand-quinary-dark-20: 120, 65%, 25%, 0.2;
+    --brand-quinary-dark-30: 120, 65%, 25%, 0.3;
+    --brand-quinary-dark-40: 120, 65%, 25%, 0.4;
+    --brand-quinary-dark-50: 120, 65%, 25%, 0.5;
+    --brand-quinary-dark-60: 120, 65%, 25%, 0.6;
+    --brand-quinary-dark-70: 120, 65%, 25%, 0.7;
+    --brand-quinary-dark-80: 120, 65%, 25%, 0.8;
+    --brand-quinary-dark-90: 120, 65%, 25%, 0.9;
+
+    --brand-quinary-mid-5: 120, 65%, 40%, 0.05;
+    --brand-quinary-mid-10: 120, 65%, 40%, 0.1;
+    --brand-quinary-mid-20: 120, 65%, 40%, 0.2;
+    --brand-quinary-mid-30: 120, 65%, 40%, 0.3;
+    --brand-quinary-mid-40: 120, 65%, 40%, 0.4;
+    --brand-quinary-mid-50: 120, 65%, 40%, 0.5;
+    --brand-quinary-mid-60: 120, 65%, 40%, 0.6;
+    --brand-quinary-mid-70: 120, 65%, 40%, 0.7;
+    --brand-quinary-mid-80: 120, 65%, 40%, 0.8;
+    --brand-quinary-mid-90: 120, 65%, 40%, 0.9;
+
+    --brand-quinary-light-5: 120, 65%, 55%, 0.05;
+    --brand-quinary-light-10: 120, 65%, 55%, 0.1;
+    --brand-quinary-light-20: 120, 65%, 55%, 0.2;
+    --brand-quinary-light-30: 120, 65%, 55%, 0.3;
+    --brand-quinary-light-40: 120, 65%, 55%, 0.4;
+    --brand-quinary-light-50: 120, 65%, 55%, 0.5;
+    --brand-quinary-light-60: 120, 65%, 55%, 0.6;
+    --brand-quinary-light-70: 120, 65%, 55%, 0.7;
+    --brand-quinary-light-80: 120, 65%, 55%, 0.8;
+    --brand-quinary-light-90: 120, 65%, 55%, 0.9;
+
+    /* Cores neutras */
+    --neutral-black: 0, 0%, 4%;
+    --neutral-black-opacity: 0, 0%, 0%, 0.3;
+    --neutral-darkest: 0, 0%, 9%;
+    --neutral-dark: 0, 0%, 33%;
+    --neutral-mid-accent: 0, 0%, 100%, 0.102;
+    --neutral-mid: 0, 0%, 72%;
+    --neutral-light: 0, 0%, 88%;
+    --neutral-lightest: 0, 0%, 96%;
+    --neutral-white: 0, 0%, 100%;
+
+    /* Cores neutras com opacidade */
+  }
+
+  .dark {
+    /* Dark mode mantém as mesmas cores KGB */
+    --kgb-red: 0 100% 45%;
+    --kgb-red-dark: 0 100% 27%;
+    --kgb-gold: 51 100% 50%;
+    --kgb-gold-dark: 43 72% 37%;
+    --kgb-black: 0 0% 10%;
+
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 5%;
+    --card-foreground: 0 0% 100%;
+
+    /* Glass mantém opacidades */
+    --glass-bg-from: 0 100% 45% / 0.2;
+    --glass-bg-via: 51 100% 50% / 0.1;
+    --glass-bg-to: 0 100% 45% / 0.2;
+    --glass-blur: 0 0% 0% / 0.4;
+    --glass-border: 0 0% 100% / 0.1;
+
+    /* Status cores iguais */
+    --quota-livre-bg: 142 71% 45% / 0.2;
+    --quota-livre-border: 142 71% 45% / 0.5;
+    --quota-livre-text: 142 76% 36%;
+    --quota-livre-hover: 142 71% 45% / 0.3;
+
+    --quota-reservado-bg: 189 94% 43% / 0.2;
+    --quota-reservado-border: 189 94% 43% / 0.5;
+    --quota-reservado-text: 186 94% 47%;
+
+    --quota-pago-bg: 0 84% 60% / 0.2;
+    --quota-pago-border: 0 84% 60% / 0.5;
+    --quota-pago-text: 0 91% 71%;
+
+    --quota-selected-bg: 51 100% 50%;
+    --quota-selected-border: 51 100% 50%;
+    --quota-selected-text: 0 0% 0%;
+
+    --text-muted: 0 0% 100% / 0.6;
+    --text-subtle: 0 0% 100% / 0.7;
+    --text-secondary: 0 0% 100% / 0.8;
+
+    --border: 0 0% 100% / 0.1;
+    --input: 0 0% 100% / 0.1;
+    --ring: 51 100% 50%;
+    /* Variáveis em ordem alfabética */
+    --accent: var(--brand-primary-dark);
+    --accent-foreground: var(--neutral-white);
+    --background: var(--neutral-black);
+    --background-hover: var(--neutral-dark);
+    --border: var(--neutral-mid-accent);
+    --card: var(--neutral-darkest);
+    --card-foreground: var(--neutral-lightest);
+    --card-gradient: var(--neutral-black-opacity);
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --destructive: var(--funcional-error-dark);
+    --destructive-foreground: var(--neutral-lightest);
+    --destructive-hover: var(--funcional-error-mid);
+    --foreground: var(--neutral-white);
+    --info: var(--funcional-info-dark);
+    --info-foreground: var(--neutral-lightest);
+    --info-hover: var(--funcional-info-mid);
+    --input: var(--neutral-dark);
+    --muted: var(--neutral-darkest);
+    --muted-foreground: var(--neutral-light);
+    --popover: var(--neutral-black);
+    --popover-foreground: var(--neutral-lightest);
+    --primary: var(--brand-primary-mid);
+    --primary-5: var(--brand-primary-mid-5);
+    --primary-10: var(--brand-primary-mid-10);
+    --primary-20: var(--brand-primary-mid-20);
+    --primary-30: var(--brand-primary-mid-30);
+    --primary-40: var(--brand-primary-mid-40);
+    --primary-50: var(--brand-primary-mid-50);
+    --primary-60: var(--brand-primary-mid-60);
+    --primary-70: var(--brand-primary-mid-70);
+    --primary-80: var(--brand-primary-mid-80);
+    --primary-90: var(--brand-primary-mid-90);
+    --primary-foreground: var(--neutral-white);
+    --primary-hover: var(--brand-primary-dark);
+    --quaternary: var(--brand-quaternary-dark);
+    --quaternary-foreground: var(--neutral-white);
+    --quaternary-hover: var(--brand-quaternary-mid);
+    --quinary: var(--brand-quinary-dark);
+    --quinary-foreground: var(--neutral-white);
+    --quinary-hover: var(--brand-quinary-mid);
+    --ring: var(--brand-primary-light);
+    --secondary: var(--brand-secondary-dark);
+    --secondary-5: var(--brand-secondary-dark-5);
+    --secondary-10: var(--brand-secondary-dark-10);
+    --secondary-20: var(--brand-secondary-dark-20);
+    --secondary-30: var(--brand-secondary-dark-30);
+    --secondary-40: var(--brand-secondary-dark-40);
+    --secondary-50: var(--brand-secondary-dark-50);
+    --secondary-60: var(--brand-secondary-dark-60);
+    --secondary-70: var(--brand-secondary-dark-70);
+    --secondary-80: var(--brand-secondary-dark-80);
+    --secondary-90: var(--brand-secondary-dark-90);
+    --secondary-foreground: var(--brand-secondary-lightest);
+    --success: var(--funcional-success-primary);
+    --success-foreground: var(--neutral-white);
+    --success-hover: var(--funcional-success-secondary);
+    --tertiary: var(--brand-tertiary-dark);
+    --tertiary-foreground: var(--neutral-white);
+    --tertiary-hover: var(--brand-tertiary-mid);
+    --warning: var(--funcional-warning-dark);
+    --warning-foreground: var(--neutral-lightest);
+    --warning-hover: var(--funcional-warning-mid);
+  }
+
+  * {
+    -webkit-transition: background-color 0.3s linear;
+    -moz-transition: background-color 0.3s linear;
+    -o-transition: background-color 0.3s linear;
+    -ms-transition: background-color 0.3s linear;
+    transition: background-color 0.3s linear;
+    font-family:
+      var(--font-tim-sans),
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      sans-serif;
+  }
+
+  html {
+    font-family: var(--font-geist-sans), sans-serif;
+    height: 100%;
+  }
+
+  @media (min-width: 428px) {
+    html {
+      overflow-y: hidden;
+    }
+  }
+
+  body {
+    color: rgb(var(--foreground));
+    background-color: rgb(var(--background));
+    height: 100%;
+    overflow-x: hidden;
+    font-family: var(--font-geist-sans), sans-serif;
+    letter-spacing: 0.01em;
+  }
+
+  @media (min-width: 428px) {
+    body {
+      height: 100vh;
+    }
+  }
+
+  @media print {
+    html,
+    body {
+      overflow: visible !important;
+      height: auto !important;
+      width: auto !important;
+    }
+
+    .no-print {
+      display: none !important;
+    }
+
+    .print-break-inside-avoid {
+      break-inside: avoid;
+    }
+
+    .print-full-width {
+      width: 100% !important;
+      max-width: none !important;
+    }
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    @apply scroll-smooth;
+  }
+  body {
+    @apply bg-background text-foreground overscroll-none;
+    /* font-feature-settings: "rlig" 1, "calt" 1; */
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+  }
+}
+
+/* Scrollbar custom global para todos os elementos scrolláveis - Tema KGB */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #ffd700 rgba(0, 0, 0, 0.3);
+}
+
+/* Para navegadores baseados em Webkit */
+*::-webkit-scrollbar {
+  width: 0.5rem; /* Largura do scrollbar */
+  height: 0.5rem; /* Altura do scrollbar horizontal */
+}
+
+*::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2); /* Fundo escuro translúcido */
+  border-radius: 9999px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #e60000, #ffd700, #e60000); /* Gradiente KGB */
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.1); /* Borda sutil */
+  transition: background 0.3s ease;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #ffd700, #e60000, #ffd700); /* Inverte no hover */
+  border-color: rgba(255, 215, 0, 0.3);
+}
+
+*::-webkit-scrollbar-corner {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* Remove cor estranha do autofill do navegador - mantém estilo glass */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.05) inset !important;
+  -webkit-text-fill-color: white !important;
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.container.collapsed {
+  --sidebar-width-closed-width: 4.25rem;
+
+  @media (max-width: 480px) {
+    --sidebar-width: 0rem;
+  }
+}
+
+.header {
+  grid-area: header;
+}
+
+.sidebar {
+  grid-area: sidebar;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    @apply scroll-smooth;
+  }
+  body {
+    @apply bg-background text-foreground overflow-x-hidden;
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+  }
+}
+
+.main {
+  grid-area: main;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  padding-inline: 100px;
+}
+
+.blur-up {
+  filter: blur(5px);
+  transition: filter 0.3s ease-in-out;
+}
+
+.blur-up:not([data-loaded]) {
+  filter: blur(5px);
+}
+
+.blur-up[data-loaded] {
+  filter: blur(0);
+}
+
+@media (max-width: 1024px) {
+  .container {
+    padding-inline: 20px;
+  }
+}
+
+.custom-transform {
+  transform: none !important;
+  top: 100% !important;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 2px;
+  background: hsl(var(--foreground));
+  border-radius: 5px;
+  cursor: pointer;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 4px;
+  height: 20px;
+  border-radius: 12px;
+  background: hsl(var(--foreground));
+  cursor: pointer;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 4px;
+  height: 20px;
+  border-radius: 12px;
+  background: hsl(var(--foreground));
+  cursor: pointer;
+}
+
+input[type="range"]::-ms-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: hsl(var(--foreground));
+  cursor: pointer;
+}
+
+input[type="range"]::-ms-track {
+  background: hsl(var(--foreground));
+  border-color: transparent;
+  color: transparent;
+}
+
+.rdp-vhidden {
+  @apply hidden;
+}
+
+.react-calendar-heatmap .color-scale-1 {
+  fill: #d6e685;
+}
+
+.aurora-container {
+  width: 100%;
+  height: 100%;
+}
