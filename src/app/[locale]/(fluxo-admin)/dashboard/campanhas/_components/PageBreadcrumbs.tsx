@@ -53,12 +53,6 @@ export function PageBreadcrumbs() {
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbLink asChild>
-            <Link href="/pt/dashboard/campanhas">Início</Link>
-          </BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>
           <BreadcrumbPage>Campanhas</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
