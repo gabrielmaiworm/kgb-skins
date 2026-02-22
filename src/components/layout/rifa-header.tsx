@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, TicketCheck, Menu, LogIn, MessageCircle, LayoutDashboard, User, History } from "lucide-react";
+import { Home, TicketCheck, Menu, LogIn, MessageCircle, LayoutDashboard, User, History, Package } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { useSession } from "next-auth/react";
@@ -16,14 +16,17 @@ export default function RifaHeader() {
     ? "/perfil"
     : pathname.includes("/meus-numeros")
       ? "/meus-numeros"
-      : pathname.includes("/changelog")
-        ? "/changelog"
-        : "/";
+      : pathname.includes("/oferecer-skins")
+        ? "/oferecer-skins"
+        : pathname.includes("/changelog")
+          ? "/changelog"
+          : "/";
   const { data: session } = useSession();
 
   const menuItems = [
     { icon: Home, label: "Início", href: "/" },
     { icon: TicketCheck, label: "Meus números", href: "/meus-numeros" },
+    { icon: Package, label: "Oferecer Skins", href: "/oferecer-skins" },
     // { icon: History, label: "Changelog", href: "/changelog" },
     {
       icon: MessageCircle,

@@ -173,6 +173,14 @@ export const adminNavItems = (recentStores?: Customer[]): NavItem[] => {
       items: [],
     },
     {
+      title: "Ofertas",
+      url: "/pt/dashboard/ofertas",
+      icon: "package",
+      isActive: false,
+      shortcut: ["o", "f"],
+      items: [],
+    },
+    {
       title: "Logs",
       url: "/pt/dashboard/logs",
       icon: "post",

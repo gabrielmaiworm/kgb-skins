@@ -111,7 +111,7 @@ export function DataTable<TData, TValue>({
 
   function renderCellValue(cell: any) {
     // Lista de IDs de colunas que devem ignorar a formatação automática
-    const skipFormattingColumns = ["image_url", "imageUrl", "installation_image", "images"];
+    const skipFormattingColumns = ["image_url", "imageUrl", "installation_image", "images", "inspectLink"];
 
     // Verifica se esta coluna está na lista de exclusão
     if (skipFormattingColumns.includes(cell.column.id)) {
