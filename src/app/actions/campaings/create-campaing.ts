@@ -45,9 +45,10 @@ export async function postCreateCampaignAction(
     // Modo fixo como MANUAL
     const mode = "MANUAL";
 
-    const images = data.getAll("images") as File[];
+    const coverImage = data.get("coverImage");
+    const gallery = data.getAll("gallery");
 
-    if (!images || images.length === 0) {
+    if (!coverImage) {
       throw new Error("É necessário enviar ao menos uma imagem.");
     }
 
@@ -75,16 +76,9 @@ export async function postCreateCampaignAction(
     const inspectionLink = (data.get("inspectionLink") as string)?.trim();
     if (inspectionLink) formDataToSend.append("inspectionLink", inspectionLink);
 
-    formDataToSend.append("coverImage", images[0]);
+    formDataToSend.append("coverImage", coverImage);
 
-    if (images.length > 1) {
-      for (let i = 1; i < images.length; i++) {
-        formDataToSend.append("gallery", images[i]);
-      }
-    }
-
-    const formDataObject = Object.fromEntries(formDataToSend.entries());
-    const jsonData = JSON.stringify(formDataObject);
+    gallery.forEach((file) => formDataToSend.append("gallery", file));
 
     const response = await createCampaignService(formDataToSend);
     return {

@@ -1,26 +1,20 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerDescription,
-} from "@/components/ui/drawer";
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Trophy, Search } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useCampaignOrdersAdminQuery } from "@/querys/campaings/orders-admin";
-import { updateCampaignWinnerAction } from "@/app/actions/campaings/update-winner";
+import { updateCampaignWinnerWithFormDataAction } from "@/app/actions/campaings/update-winner";
 import { useAllCampaingsQuery } from "@/querys/campaings/all";
 import { useCampaingByIdQuery } from "@/querys/campaings";
 import { toast } from "sonner";
-import { CampaignListItem } from "@/@types/campaings";
+import { CampaignListItem, GetCampaignByIdResponse } from "@/@types/campaings";
 
 interface WinnerTicketDrawerProps {
-  campaign: CampaignListItem;
+  campaign: CampaignListItem | GetCampaignByIdResponse;
   onSuccess?: () => void;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
@@ -40,8 +34,7 @@ export const WinnerTicketDrawer = ({
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const { data: ordersData, invalidateQuery: invalidateOrders } =
-    useCampaignOrdersAdminQuery(campaign.id);
+  const { data: ordersData, invalidateQuery: invalidateOrders } = useCampaignOrdersAdminQuery(campaign.id);
   const { invalidateQuery: invalidateCampaigns } = useAllCampaingsQuery();
   const { invalidateQuery: invalidateCampaign } = useCampaingByIdQuery(campaign.id);
 
@@ -76,9 +69,7 @@ export const WinnerTicketDrawer = ({
     const padded = term.padStart(3, "0");
     return quotas.filter(
       (q) =>
-        q.numero === num ||
-        String(q.numero).includes(term) ||
-        q.numero.toString().padStart(3, "0").includes(padded)
+        q.numero === num || String(q.numero).includes(term) || q.numero.toString().padStart(3, "0").includes(padded)
     );
   }, [quotas, searchTerm]);
 
@@ -90,7 +81,55 @@ export const WinnerTicketDrawer = ({
 
     setIsLoading(true);
     try {
-      const result = await updateCampaignWinnerAction(campaign.id, selectedNumber);
+      const imageUrls = [campaign.coverImage, ...(campaign.gallery || [])].filter(Boolean) as string[];
+      if (imageUrls.length === 0) {
+        toast.error("Campanha sem imagens.");
+        setIsLoading(false);
+        return;
+      }
+
+      const imageFiles: File[] = [];
+      for (let i = 0; i < imageUrls.length; i++) {
+        const url = imageUrls[i];
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`Falha ao buscar imagem: ${url}`);
+        const blob = await response.blob();
+        const filename = i === 0 ? "cover.jpg" : `gallery-${i}.jpg`;
+        const file = new File([blob], filename, { type: blob.type || "image/jpeg" });
+        imageFiles.push(file);
+      }
+
+      const formData = new FormData();
+      formData.append("id", campaign.id);
+      formData.append("title", campaign.title);
+      formData.append("subtitle", campaign.subtitle || "");
+      formData.append("description", campaign.description || "");
+      formData.append("totalTickets", String(campaign.totalTickets));
+      formData.append("itemPrice", campaign.isFree ? "0" : String(campaign.itemPrice));
+      formData.append("maintenancePrice", campaign.isFree ? "0" : String(campaign.maintenancePrice));
+      formData.append("itemCondition", campaign.itemCondition || "");
+      formData.append("itemFloat", campaign.itemFloat || "0");
+      formData.append("drawDate", campaign.drawDate || new Date().toISOString().slice(0, 10));
+      formData.append("is_free", campaign.isFree ? "true" : "false");
+      formData.append("mode", campaign.mode || "MANUAL");
+      formData.append("featured", String((campaign as GetCampaignByIdResponse).featured ?? false));
+      formData.append("winnerTicket", String(selectedNumber));
+      formData.append("status", "COMPLETED");
+
+      const campaignData = campaign as GetCampaignByIdResponse;
+      if (campaignData.prizeDescription) {
+        formData.append("prizeDescription", campaignData.prizeDescription);
+      }
+      if (campaignData.rules) {
+        formData.append("rules", campaignData.rules);
+      }
+
+      formData.append("coverImage", imageFiles[0]);
+      for (let i = 1; i < imageFiles.length; i++) {
+        formData.append("gallery", imageFiles[i]);
+      }
+
+      const result = await updateCampaignWinnerWithFormDataAction(formData);
       if (result.success) {
         toast.success(result.message);
         invalidateCampaigns();
@@ -114,9 +153,7 @@ export const WinnerTicketDrawer = ({
 
   return (
     <Drawer open={open} onOpenChange={(o) => setOpen(o)} direction="right">
-      <DrawerContent
-        className="h-full w-full overflow-y-auto [&[data-vaul-drawer-direction=right]]:!w-[min(100%,42rem)] [&[data-vaul-drawer-direction=right]]:!max-w-[42rem]"
-      >
+      <DrawerContent className="h-full w-full overflow-y-auto [&[data-vaul-drawer-direction=right]]:!w-[min(100%,42rem)] [&[data-vaul-drawer-direction=right]]:!max-w-[42rem]">
         <div className="flex flex-col h-full overflow-y-auto w-full">
           <DrawerHeader className="border-b shrink-0">
             <DrawerTitle>Selecionar número vencedor</DrawerTitle>
@@ -174,14 +211,10 @@ export const WinnerTicketDrawer = ({
             {selectedNumber !== null && (
               <div className="pt-4 border-t">
                 <p className="text-sm font-medium mb-2">
-                  Número selecionado: <span className="text-kgb-gold">{selectedNumber.toString().padStart(3, "0")}</span>
+                  Número selecionado:{" "}
+                  <span className="text-kgb-gold">{selectedNumber.toString().padStart(3, "0")}</span>
                 </p>
-                <Button
-                  onClick={handleConfirm}
-                  loading={isLoading}
-                  className="w-full"
-                  disabled={isLoading}
-                >
+                <Button onClick={handleConfirm} loading={isLoading} className="w-full" disabled={isLoading}>
                   <Trophy className="w-4 h-4 mr-2" />
                   Confirmar vencedor
                 </Button>

@@ -169,9 +169,10 @@ const EditFormBox: React.FC<{
       );
     }
 
-    imagesToSend.forEach((file) => {
-      formData.append("images", file);
-    });
+    if (imagesToSend.length > 0) {
+      formData.append("coverImage", imagesToSend[0]);
+      imagesToSend.slice(1).forEach((file) => formData.append("gallery", file));
+    }
 
     formData.append("id", itemToUpdate?.id || "");
 

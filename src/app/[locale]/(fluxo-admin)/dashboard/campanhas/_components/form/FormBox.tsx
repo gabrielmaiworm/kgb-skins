@@ -158,9 +158,10 @@ const PostFormBox: React.FC<{
       );
     }
 
-    imagesToSend.forEach((file) => {
-      formData.append("images", file);
-    });
+    if (imagesToSend.length > 0) {
+      formData.append("coverImage", imagesToSend[0]);
+      imagesToSend.slice(1).forEach((file) => formData.append("gallery", file));
+    }
 
     // Garante itemPrice parseado conforme inputMask (R$ 41,34 -> 41.34)
     formData.set("itemPrice", parseFormattedPrice(formValues.itemPrice || ""));

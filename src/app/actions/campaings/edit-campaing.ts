@@ -23,11 +23,12 @@ export async function updateCampaignAction(
     // Extrair apenas o que precisa de processamento
     const itemFloat = data.get("itemFloat") as string;
     const itemCondition = getItemConditionFromFloat(parseFloat(itemFloat));
-    const images = data.getAll("images") as File[];
+    const coverImage = data.get("coverImage");
+    const gallery = data.getAll("gallery");
     const id = data.get("id") as string;
     const isFree = data.get("is_free") === "true";
 
-    if (!images || images.length === 0) {
+    if (!coverImage) {
       throw new Error("É necessário enviar ao menos uma imagem.");
     }
 
@@ -52,7 +53,7 @@ export async function updateCampaignAction(
     if (isFree) formDataToSend.append("isFree", "true");
     formDataToSend.append("mode", "MANUAL");
     formDataToSend.append("featured", data.get("featured") === "true" ? "true" : "false");
-    formDataToSend.append("coverImage", images[0]);
+    formDataToSend.append("coverImage", coverImage);
 
     // Campos opcionais
     if (subtitle) formDataToSend.append("subtitle", subtitle);
@@ -72,11 +73,7 @@ export async function updateCampaignAction(
     const inspectionLink = (data.get("inspectionLink") as string)?.trim();
     if (inspectionLink) formDataToSend.append("inspectionLink", inspectionLink);
 
-    if (images.length > 1) {
-      for (let i = 1; i < images.length; i++) {
-        formDataToSend.append("gallery", images[i]);
-      }
-    }
+    gallery.forEach((file) => formDataToSend.append("gallery", file));
 
     const response = await updateCampaignService(id, formDataToSend);
     return {
