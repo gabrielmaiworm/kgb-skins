@@ -39,7 +39,10 @@ export default async function middleware(req: NextRequest) {
   // Bloquear acesso ao dashboard para usuários não admin
   const isDashboardRoute = locales.some((locale) => pathname.startsWith(`/${locale}/dashboard`));
   const isProtectedClientRoute = locales.some(
-    (locale) => pathname.startsWith(`/${locale}/perfil`) || pathname.startsWith(`/${locale}/meus-numeros`)
+    (locale) =>
+      pathname.startsWith(`/${locale}/perfil`) ||
+      pathname.startsWith(`/${locale}/meus-numeros`) ||
+      pathname.startsWith(`/${locale}/oferecer-skins`)
   );
 
   if (isProtectedClientRoute && !token) {

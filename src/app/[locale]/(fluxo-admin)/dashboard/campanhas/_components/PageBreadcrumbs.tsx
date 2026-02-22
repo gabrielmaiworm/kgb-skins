@@ -1,10 +1,7 @@
-import Link from "next/link";
-
 import {
   Breadcrumb,
   BreadcrumbEllipsis,
   BreadcrumbItem,
-  BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
@@ -15,11 +12,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useParams, useRouter } from "next/navigation";
 
 export function PageBreadcrumbs() {
-  const router = useRouter();
-
   return (
     <Breadcrumb>
       <BreadcrumbList>

@@ -5,7 +5,9 @@ import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import Aurora from "@/components/ui/aurora";
 import { ProfileInfoCard } from "./ProfileInfoCard";
+import { SaldoBalanceCard } from "./SaldoBalanceCard";
 import { InvitedUsersSection } from "./InvitedUsersSection";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import MeusNumerosGrid from "../../meus-numeros/_components/meus-numeros-grid";
 import { Button } from "@/components/ui/button";
 import { signOut } from "next-auth/react";
@@ -74,6 +76,18 @@ export const PageContainer = () => {
 
           {/* Perfil Info */}
           <ProfileInfoCard />
+
+          {/* Saldo */}
+          <section>
+            <SaldoBalanceCard />
+            <Alert variant="default" className="mt-4">
+              <AlertTitle>Informações sobre o saldo</AlertTitle>
+              <AlertDescription>
+                O valor da skin é validado conforme o mercado atual. O saldo é disponível apenas para uso em rifas,
+                sem opção de saque imediato.
+              </AlertDescription>
+            </Alert>
+          </section>
 
           {/* Meus Números */}
           <section>
