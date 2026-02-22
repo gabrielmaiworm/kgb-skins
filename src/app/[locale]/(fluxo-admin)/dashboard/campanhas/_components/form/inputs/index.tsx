@@ -14,6 +14,8 @@ import {
   Wrench,
   Gauge,
   Zap,
+  User,
+  ExternalLink,
 } from "lucide-react";
 import { priceMask } from "@/utils/input-masks";
 
@@ -112,6 +114,30 @@ export const FormInputs = (
     //   control: control,
     //   description: "Regras e termos da campanha.",
     // },
+    {
+      id: "skinOwner",
+      label: "Dono da Skin",
+      type: "select",
+      icon: <User className="h-4 w-4" />,
+      options: [
+        { label: "Kitito", value: "KITITO" },
+        { label: "Gomin", value: "GOMIN" },
+        { label: "Guizo", value: "GUIZO" },
+        { label: "Estoque KGB", value: "ESTOQUE_KGB" },
+      ],
+      placeholder: "Selecione o dono da skin",
+      description: "Proprietário da skin (opcional).",
+      control: control,
+    },
+    {
+      id: "inspectionLink",
+      label: "Link de Inspeção",
+      placeholder: "https://...",
+      type: "url",
+      icon: <ExternalLink className="h-4 w-4" />,
+      control: control,
+      description: "URL para inspeção do item (opcional).",
+    },
     {
       id: "status",
       label: "Status",

@@ -3,10 +3,12 @@
 import {
   getCampaignByIdService,
   getCampaignOrdersAdminService,
+  getCampaignOrdersByUserIdService,
   getCampaignOrdersService,
   listCampaignsService,
   myOrdersService,
 } from "@/services/campaigns";
+import { axiosErrorMessage } from "@/utils/errorMessage";
 import { baseGetAction } from "../base-get-actions";
 import {
   ListCampaignsRequest,
@@ -16,6 +18,8 @@ import {
   MyOrdersResponse,
   GetCampaignOrdersResponse,
   GetCampaignOrdersAdminResponse,
+  GetUserOrdersRequest,
+  GetUserOrdersResponse,
 } from "@/@types/campaings";
 
 export const listCampaingsAction = baseGetAction<ListCampaignsRequest, ListCampaignsResponse>(
@@ -47,3 +51,26 @@ export const getMyOrdersAction = baseGetAction<MyOrdersRequest, MyOrdersResponse
   "Números obtidos com sucesso.",
   "Erro ao obter números."
 );
+
+export async function getCampaignOrdersByUserIdAction(
+  userId: string,
+  params?: GetUserOrdersRequest
+): Promise<GetActionProps<GetUserOrdersResponse>> {
+  try {
+    const response = await getCampaignOrdersByUserIdService(userId, params);
+    return {
+      message: "Pedidos do usuário obtidos com sucesso.",
+      success: true,
+      issues: [],
+      responseData: response.data,
+    };
+  } catch (error) {
+    const errorMsg = await axiosErrorMessage(error, "Erro ao obter pedidos do usuário.");
+    return {
+      message: errorMsg,
+      success: false,
+      issues: [errorMsg],
+      responseData: undefined,
+    };
+  }
+}

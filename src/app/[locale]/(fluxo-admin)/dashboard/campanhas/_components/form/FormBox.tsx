@@ -74,6 +74,8 @@ const PostFormBox: React.FC<{
             rules: "Regras da campanha",
             status: "ACTIVE",
             featured: false,
+            skinOwner: "",
+            inspectionLink: "",
           }
         : {
             title: "",
@@ -87,6 +89,8 @@ const PostFormBox: React.FC<{
             rules: "",
             status: "PENDING",
             featured: false,
+            skinOwner: "",
+            inspectionLink: "",
           },
     mode: "onBlur",
     reValidateMode: "onChange",

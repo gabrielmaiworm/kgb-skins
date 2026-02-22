@@ -44,8 +44,6 @@ function parseJwt(token: string): JwtPayloadCustom {
 
 export async function nodeLogin(loginProps: LoginInterface): Promise<FormState> {
   try {
-    console.log("Iniciando processo de login com os dados:", loginProps);
-
     const response =
       loginProps.loginType === "email"
         ? await loginService({ email: loginProps.email, password: loginProps.password })

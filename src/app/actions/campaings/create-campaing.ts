@@ -69,6 +69,12 @@ export async function postCreateCampaignAction(
     if (mode) formDataToSend.append("mode", mode);
     formDataToSend.append("featured", featured.toString());
 
+    const skinOwner = data.get("skinOwner") as string;
+    if (skinOwner) formDataToSend.append("skinOwner", skinOwner);
+
+    const inspectionLink = (data.get("inspectionLink") as string)?.trim();
+    if (inspectionLink) formDataToSend.append("inspectionLink", inspectionLink);
+
     formDataToSend.append("coverImage", images[0]);
 
     if (images.length > 1) {

@@ -66,6 +66,12 @@ export async function updateCampaignAction(
     const status = data.get("status");
     if (status) formDataToSend.append("status", status as string);
 
+    const skinOwner = data.get("skinOwner") as string;
+    if (skinOwner) formDataToSend.append("skinOwner", skinOwner);
+
+    const inspectionLink = (data.get("inspectionLink") as string)?.trim();
+    if (inspectionLink) formDataToSend.append("inspectionLink", inspectionLink);
+
     if (images.length > 1) {
       for (let i = 1; i < images.length; i++) {
         formDataToSend.append("gallery", images[i]);

@@ -75,6 +75,8 @@ export const baseSchema = z.object({
   featured: z.boolean().optional(),
   images: z.array(imageSchema).max(10, { message: "No máximo 10 imagens são permitidas" }).optional(),
   is_free: z.boolean().optional(),
+  skinOwner: z.string().optional(),
+  inspectionLink: z.string().max(2048).optional(),
 });
 
 export const schema = baseSchema.refine(

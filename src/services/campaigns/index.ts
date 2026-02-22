@@ -19,6 +19,8 @@ import {
   GetCampaignOrdersRequest,
   GetCampaignOrdersResponse,
   GetCampaignOrdersAdminResponse,
+  GetUserOrdersRequest,
+  GetUserOrdersResponse,
 } from "@/@types/campaings";
 
 /**
@@ -110,6 +112,16 @@ export async function getCampaignOrdersAdminService(
   params?: GetCampaignOrdersRequest
 ): Promise<AxiosResponse<GetCampaignOrdersAdminResponse>> {
   return await api.get(`/campaigns/admin/${campaignId}/orders`, { params });
+}
+
+/**
+ * Pedidos de um usuário (Admin)
+ */
+export async function getCampaignOrdersByUserIdService(
+  userId: string,
+  params?: GetUserOrdersRequest
+): Promise<AxiosResponse<GetUserOrdersResponse>> {
+  return await api.get(`/campaigns/orders/user/${userId}`, { params });
 }
 
 /**

@@ -111,7 +111,7 @@ export function DataTable<TData, TValue>({
 
   function renderCellValue(cell: any) {
     // Lista de IDs de colunas que devem ignorar a formatação automática
-    const skipFormattingColumns = ["image_url", "imageUrl", "installation_image", "images"];
+    const skipFormattingColumns = ["image_url", "imageUrl", "installation_image", "images", "inspectionLink", "inspectLink"];
 
     // Verifica se esta coluna está na lista de exclusão
     if (skipFormattingColumns.includes(cell.column.id)) {
@@ -313,7 +313,8 @@ export function DataTable<TData, TValue>({
                     <TableCell key={cell.id}>
                       {cell.column.id === "actions" ||
                       cell.column.id.includes("other_action") ||
-                      cell.column.id === "select"
+                      cell.column.id === "select" ||
+                      cell.column.id === "avgSellTime"
                         ? flexRender(cell.column.columnDef.cell, cell.getContext())
                         : cell.getValue() === null || cell.getValue() === undefined || cell.getValue() === ""
                           ? "-"

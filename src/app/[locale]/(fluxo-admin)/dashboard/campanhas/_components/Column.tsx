@@ -1,7 +1,18 @@
 "use client";
 import React from "react";
 import { ColumnDef } from "@tanstack/react-table";
-import { Clock, Trophy, MoreHorizontal, DollarSign, Ticket, Calendar, Package, Tag } from "lucide-react";
+import {
+  Clock,
+  Trophy,
+  MoreHorizontal,
+  DollarSign,
+  Ticket,
+  Calendar,
+  Package,
+  Tag,
+  Timer,
+  ExternalLink,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -143,6 +154,20 @@ export const LineActions: React.FC<CampaignType> = ({ row }) => {
 const formatBRL = (value: number) =>
   new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(value);
 
+const formatAvgSellTime = (first?: string, last?: string): string => {
+  if (!first || !last) return "-";
+  const a = new Date(first).getTime();
+  const b = new Date(last).getTime();
+  if (isNaN(a) || isNaN(b) || b <= a) return "-";
+  const diffMs = b - a;
+  const diffM = Math.floor(diffMs / 60000);
+  const diffH = Math.floor(diffM / 60);
+  const diffD = Math.floor(diffH / 24);
+  if (diffD >= 1) return `${diffD} dia${diffD > 1 ? "s" : ""}`;
+  if (diffH >= 1) return `${diffH}h ${diffM % 60}min`;
+  return `${diffM} min`;
+};
+
 const statusConfig: Record<
   string,
   { label: string; variant: "default" | "secondary" | "destructive" | "success" | "warning" | "info" | "outline" }
@@ -184,14 +209,35 @@ export const tableColumns: ColumnDef<CampaignListItem>[] = [
     },
   },
   {
+    accessorKey: "status",
+    header: (props) => <UnsortableHeader {...props} columnKey="status" title="Status" icon={Clock} />,
+    cell: ({ getValue }) => {
+      const status = getValue() as string;
+      const config = statusConfig[status] || { label: status, variant: "outline" as const };
+      return (
+        <Badge className="w-full text-center flex justify-center" variant={config.variant}>
+          {config.label}
+        </Badge>
+      );
+    },
+  },
+  {
     accessorKey: "itemPrice",
     header: (props) => <UnsortableHeader {...props} columnKey="itemPrice" title="Preço" icon={Package} />,
     cell: ({ row }) => {
-      const { isFree, itemPrice } = row.original;
+      const { isFree, itemPrice, maintenancePrice } = row.original;
       if (isFree) {
         return <Badge variant="outline">Gratuito</Badge>;
       }
-      return formatBRL(itemPrice);
+      const total = itemPrice + (itemPrice * (maintenancePrice ?? 0)) / 100;
+      return (
+        <div className="flex flex-col min-w-0">
+          <span className="font-medium">{formatBRL(itemPrice)}</span>
+          <span className="text-xs text-muted-foreground truncate max-w-[120px]">
+            {(maintenancePrice ?? 0) === 0 ? "sem taxa" : `Total: ${formatBRL(total)}`}
+          </span>
+        </div>
+      );
     },
   },
   {
@@ -235,12 +281,33 @@ export const tableColumns: ColumnDef<CampaignListItem>[] = [
     },
   },
   {
-    accessorKey: "status",
-    header: (props) => <UnsortableHeader {...props} columnKey="status" title="Status" icon={Clock} />,
-    cell: ({ getValue }) => {
-      const status = getValue() as string;
-      const config = statusConfig[status] || { label: status, variant: "outline" as const };
-      return <Badge variant={config.variant}>{config.label}</Badge>;
+    id: "avgSellTime",
+    header: (props) => <UnsortableHeader {...props} columnKey="avgSellTime" title="Tempo para vender" icon={Timer} />,
+    cell: ({ row }) => {
+      if (row.original.status === "ACTIVE") return "-";
+      return formatAvgSellTime(row.original.firstPurchaseAt, row.original.lastPurchaseAt);
+    },
+  },
+
+  {
+    accessorKey: "inspectionLink",
+    header: (props) => (
+      <UnsortableHeader {...props} columnKey="inspectionLink" title="Link Inspeção" icon={ExternalLink} />
+    ),
+    cell: ({ row }) => {
+      const link = row.original.inspectionLink;
+      if (!link) return "-";
+      return (
+        <a
+          href={link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-kgb-gold hover:underline inline-flex items-center gap-1"
+        >
+          <ExternalLink className="h-4 w-4" />
+          Abrir
+        </a>
+      );
     },
   },
   {

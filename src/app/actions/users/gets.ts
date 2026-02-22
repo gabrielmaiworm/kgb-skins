@@ -5,10 +5,21 @@ import {
   findUserByIdService,
   getMyInvitedUsersService,
   getInvitedUsersService,
+  getTopInvitersService,
+  getBestBuyersService,
 } from "@/services/users";
 import { baseGetAction } from "../base-get-actions";
 import { axiosErrorMessage } from "@/utils/errorMessage";
-import { ListUsersRequest, ListUsersResponse, FindUserByIdResponse, ListInvitedUsersResponse } from "@/@types/users";
+import {
+  ListUsersRequest,
+  ListUsersResponse,
+  FindUserByIdResponse,
+  ListInvitedUsersResponse,
+  TopInvitersRequest,
+  TopInvitersResponse,
+  BestBuyersRequest,
+  BestBuyersResponse,
+} from "@/@types/users";
 
 export const listUsersAction = baseGetAction<ListUsersRequest, ListUsersResponse>(
   listUsersService,
@@ -46,4 +57,16 @@ export const getInvitedUsersAction = baseGetAction<string, ListInvitedUsersRespo
   getInvitedUsersService,
   "Usuários convidados obtidos com sucesso.",
   "Erro ao obter usuários convidados."
+);
+
+export const getTopInvitersAction = baseGetAction<TopInvitersRequest, TopInvitersResponse>(
+  getTopInvitersService,
+  "Top convidadores obtidos com sucesso.",
+  "Erro ao obter top convidadores."
+);
+
+export const getBestBuyersAction = baseGetAction<BestBuyersRequest, BestBuyersResponse>(
+  getBestBuyersService,
+  "Maiores compradores obtidos com sucesso.",
+  "Erro ao obter maiores compradores."
 );

@@ -129,3 +129,40 @@ export interface ListInvitedUsersResponse {
   totalItems: number;
   itemsPerPage: number;
 }
+
+// Top Inviters (usuários que mais convidaram)
+export interface TopInviterItem extends UserListItem {
+  invitedCount: number;
+}
+
+export interface TopInvitersRequest {
+  page?: number;
+  limit?: number;
+}
+
+export interface TopInvitersResponse {
+  items: TopInviterItem[];
+  totalPages: number;
+  page: number;
+  totalItems: number;
+  itemsPerPage: number;
+}
+
+// Best Buyers (usuários que mais compraram)
+export interface BestBuyerItem {
+  user: UserListItem;
+  totalSpent: number;
+}
+
+export interface BestBuyersRequest {
+  page?: number;
+  limit?: number;
+}
+
+export interface BestBuyersResponse {
+  items: BestBuyerItem[];
+  totalPages: number;
+  page: number;
+  totalItems: number;
+  itemsPerPage: number;
+}

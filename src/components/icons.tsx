@@ -25,8 +25,11 @@ import {
   MapIcon,
   QrCode,
   ShoppingBagIcon,
+  ShoppingCart,
   User,
   User2,
+  UserPlus,
+  Users,
 } from "lucide-react";
 
 export type Icon = LucideIcon;
@@ -73,5 +76,8 @@ export const Icons = {
   spinner: Loader2,
   store: ShoppingBagIcon,
   User: User2,
+  userPlus: UserPlus,
+  users: Users,
+  shoppingCart: ShoppingCart,
   warning: AlertTriangle,
 };

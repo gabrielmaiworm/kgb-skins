@@ -14,6 +14,8 @@ export interface CreateCampaignRequest {
   rules?: string;
   status?: "PENDING" | "ACTIVE" | "PAUSED" | "COMPLETED" | "CANCELED";
   featured?: boolean;
+  skinOwner?: string;
+  inspectionLink?: string;
 }
 
 export interface CreateCampaignResponse {}
@@ -55,6 +57,10 @@ export interface CampaignListItem {
     phone: string;
   };
   paidTicketsCount: number;
+  firstPurchaseAt?: string;
+  lastPurchaseAt?: string;
+  inspectionLink?: string;
+  skinOwner?: string;
 }
 
 export interface ListCampaignsResponse {
@@ -87,6 +93,8 @@ export interface UpdateCampaignRequest {
   rules?: string;
   status?: "PENDING" | "ACTIVE" | "PAUSED" | "COMPLETED" | "CANCELED";
   featured?: boolean;
+  skinOwner?: string;
+  inspectionLink?: string;
 }
 
 export interface UpdateCampaignResponse {}
@@ -202,6 +210,14 @@ export interface MyOrdersResponse {
   page: number;
   limit: number;
 }
+
+// Pedidos por usuário (admin)
+export interface GetUserOrdersRequest {
+  page?: number;
+  limit?: number;
+}
+
+export type GetUserOrdersResponse = MyOrdersResponse;
 
 // Get Campaign Orders (Admin)
 export interface GetCampaignOrdersRequest {

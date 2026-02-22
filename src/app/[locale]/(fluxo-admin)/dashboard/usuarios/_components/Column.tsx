@@ -3,7 +3,19 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { ColumnDef } from "@tanstack/react-table";
-import { Hash, Mail, User, Phone, Shield, Clock, MoreHorizontal, CheckCircle, XCircle, UserPlus } from "lucide-react";
+import {
+  Hash,
+  Mail,
+  User,
+  Phone,
+  Shield,
+  Clock,
+  MoreHorizontal,
+  CheckCircle,
+  XCircle,
+  UserPlus,
+  ShoppingCart,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -86,6 +98,14 @@ export const LineActions: React.FC<UserRowType> = ({ row }) => {
           >
             <UserPlus className="mr-2 h-4 w-4" />
             Ver convidados
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
+            onClick={() => router.push(`/pt/dashboard/usuarios/${item.original.id}/orders`)}
+            className="cursor-pointer"
+          >
+            <ShoppingCart className="mr-2 h-4 w-4" />
+            Ver pedidos
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropDownItem onClick={handleEditar}>Editar usuário</DropDownItem>

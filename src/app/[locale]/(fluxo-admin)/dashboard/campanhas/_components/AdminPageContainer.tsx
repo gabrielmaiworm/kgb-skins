@@ -1,8 +1,7 @@
 "use client";
 import React from "react";
-import { AlertTriangle, FileText, List } from "lucide-react";
+import { FileText, List, LayoutDashboard, Users, ShoppingBag, TrendingUp, Wallet, Coins } from "lucide-react";
 import { PageBoxLayout } from "@/components/layout/page-box";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { DataTableCard } from "@/components/cards/data-table";
 import { tableColumns } from "./Column";
 import { MdOpenInNew } from "react-icons/md";
@@ -12,6 +11,8 @@ import { useColumns } from "@/context/ColumnsContext";
 import PostFormBox from "./form/FormBox";
 import EditFormBox from "./form/EditFormBox";
 import { useAllCampaingsQuery } from "@/querys/campaings/all";
+import { useDashboardQuery } from "@/querys/dashboard";
+import { DashboardMetricsCard } from "@/components/cards/DashboardMetricsCard";
 import Aurora from "@/components/ui/aurora";
 
 export const AdminPageContainer = () => {
@@ -44,6 +45,9 @@ export const AdminPageContainer = () => {
     );
   };
 
+  const { data: dashboardData, isLoading: isLoadingDashboard } = useDashboardQuery();
+  const formatBRL = (v: number) => new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(v);
+
   return (
     <div className="relative">
       <div className="fixed inset-0 ">
@@ -54,6 +58,44 @@ export const AdminPageContainer = () => {
         titleIcon={{ icon: FileText }}
         title="Gerenciamento de Campanhas"
       >
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-6">
+          <DashboardMetricsCard
+            title="Total de Campanhas"
+            value={isLoadingDashboard ? "—" : (dashboardData?.totalCampaigns ?? 0)}
+            description="Quantidade total de campanhas cadastradas"
+            icon={<LayoutDashboard />}
+          />
+          <DashboardMetricsCard
+            title="Total de Usuários"
+            value={isLoadingDashboard ? "—" : (dashboardData?.totalUsers ?? 0)}
+            description="Usuários cadastrados na plataforma"
+            icon={<Users />}
+          />
+          <DashboardMetricsCard
+            title="Usuários com Compras"
+            value={isLoadingDashboard ? "—" : (dashboardData?.usersWithPurchases ?? 0)}
+            description="Usuários que realizaram pelo menos uma compra"
+            icon={<ShoppingBag />}
+          />
+          <DashboardMetricsCard
+            title="Receita Total Campanhas"
+            value={isLoadingDashboard ? "—" : formatBRL(dashboardData?.totalCampaignRevenue ?? 0)}
+            description="Soma da receita bruta das campanhas"
+            icon={<TrendingUp />}
+          />
+          <DashboardMetricsCard
+            title="Valor Manutenção"
+            value={isLoadingDashboard ? "—" : formatBRL(dashboardData?.totalMaintenanceValue ?? 0)}
+            description="Valor total de manutenção das campanhas"
+            icon={<Coins />}
+          />
+          <DashboardMetricsCard
+            title="Receita Líquida"
+            value={isLoadingDashboard ? "—" : formatBRL(dashboardData?.netRevenue ?? 0)}
+            description="Receita após dedução da manutenção"
+            icon={<Wallet />}
+          />
+        </div>
         <DataTableCard
           columns={tableColumns}
           isLoading={isLoadingAllCampaigns}

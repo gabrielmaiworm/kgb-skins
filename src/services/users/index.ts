@@ -18,6 +18,10 @@ import {
   UpdateReferrerRequest,
   UpdateReferrerResponse,
   ListInvitedUsersResponse,
+  TopInvitersRequest,
+  TopInvitersResponse,
+  BestBuyersRequest,
+  BestBuyersResponse,
 } from "../../@types/users";
 
 /**
@@ -105,4 +109,22 @@ export async function getMyInvitedUsersService(): Promise<AxiosResponse<ListInvi
  */
 export async function getInvitedUsersService(id: string): Promise<AxiosResponse<ListInvitedUsersResponse>> {
   return await api.get(`/users/${id}/invited`);
+}
+
+/**
+ * Listar usuários que mais convidaram (top inviters)
+ */
+export async function getTopInvitersService(
+  params?: TopInvitersRequest
+): Promise<AxiosResponse<TopInvitersResponse>> {
+  return await api.get("/users/top-inviters", { params });
+}
+
+/**
+ * Listar usuários que mais compraram (best buyers)
+ */
+export async function getBestBuyersService(
+  params?: BestBuyersRequest
+): Promise<AxiosResponse<BestBuyersResponse>> {
+  return await api.get("/users/best-buyers", { params });
 }

@@ -65,6 +65,12 @@ export function DashboardBreadcrumbs() {
       items.push({ label: "Usuários", href: `${basePath}/usuarios`, isLast: !segments[1] });
       if (userId && segments[2] === "convidados") {
         items.push({ label: "Convidados", href: undefined, isLast: true });
+      } else if (userId && segments[2] === "orders") {
+        items.push({ label: "Pedidos", href: undefined, isLast: true });
+      } else if (segments[1] === "top-inviters") {
+        items.push({ label: "Top Convidadores", href: undefined, isLast: true });
+      } else if (segments[1] === "best-buyers") {
+        items.push({ label: "Maiores Compradores", href: undefined, isLast: true });
       }
     } else if (segments[0] === "logs") {
       items.push({ label: "Logs", href: undefined, isLast: true });

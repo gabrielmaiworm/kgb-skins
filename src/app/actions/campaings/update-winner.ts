@@ -55,7 +55,7 @@ export async function updateCampaignWinnerAction(
     );
     formData.append("itemCondition", campaign.itemCondition || "");
     formData.append("itemFloat", campaign.itemFloat || "0");
-    formData.append("drawDate", campaign.drawDate?.split("T")[0] || "");
+    formData.append("drawDate", new Date().toISOString());
     formData.append("is_free", campaign.isFree ? "true" : "false");
     formData.append("mode", campaign.mode || "MANUAL");
     if (campaign.featured !== undefined) {
