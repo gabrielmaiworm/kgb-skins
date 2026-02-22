@@ -27,6 +27,7 @@ import { deleteCampaignAction } from "@/app/actions/campaings/delete-campaing";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { WinnerTicketDrawer } from "./form/WinnerTicketDrawer";
 
 type CampaignType = {
   row: {
@@ -36,6 +37,7 @@ type CampaignType = {
 
 export const LineActions: React.FC<CampaignType> = ({ row }) => {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = React.useState(false);
+  const [isWinnerDrawerOpen, setIsWinnerDrawerOpen] = React.useState(false);
   const [isPending, setIsPending] = React.useState(false);
   const { invalidateQuery } = useAllCampaingsQuery();
   const { setIsUpdateDialogOpen, setItemToUpdate, setErrorMessage, setSuccessMessage } = useColumns();
@@ -94,6 +96,7 @@ export const LineActions: React.FC<CampaignType> = ({ row }) => {
           <DropDownItem onClick={() => router.push(`/pt/dashboard/campanhas/${item.original.id}/orders`)}>
             Visualizar pedidos
           </DropDownItem>
+          <DropDownItem onClick={() => setIsWinnerDrawerOpen(true)}>Definir vencedor</DropDownItem>
           <DropDownItem onClick={handleCopyLink}>Copiar link da campanha</DropDownItem>
           <DropdownMenuSeparator />
           <DropDownItem end onClick={() => setIsDeleteDialogOpen(true)}>
@@ -101,6 +104,13 @@ export const LineActions: React.FC<CampaignType> = ({ row }) => {
           </DropDownItem>
         </DropdownMenuContent>
       </DropdownMenu>
+
+      <WinnerTicketDrawer
+        campaign={item.original}
+        open={isWinnerDrawerOpen}
+        onOpenChange={setIsWinnerDrawerOpen}
+        onSuccess={invalidateQuery}
+      />
 
       <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
         <DialogContent>

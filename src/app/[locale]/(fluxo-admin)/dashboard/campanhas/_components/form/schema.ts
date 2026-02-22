@@ -91,11 +91,7 @@ export const schema = baseSchema.refine(
   }
 );
 
-export const editSchema = baseSchema
-  .extend({
-    winnerTicket: z.string({ required_error: "O ticket vencedor é obrigatório" }).optional(),
-  })
-  .refine(
+export const editSchema = baseSchema.refine(
     (data) => {
       // Se não for gratuito, itemPrice e maintenancePrice são obrigatórios
       if (!data.is_free) {

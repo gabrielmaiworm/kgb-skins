@@ -57,9 +57,6 @@ export async function updateCampaignAction(
     // Campos opcionais
     if (subtitle) formDataToSend.append("subtitle", subtitle);
 
-    const winnerTicket = data.get("winnerTicket");
-    if (winnerTicket) formDataToSend.append("winnerTicket", winnerTicket as string);
-
     const prizeDescription = data.get("prizeDescription");
     if (prizeDescription) formDataToSend.append("prizeDescription", prizeDescription as string);
 

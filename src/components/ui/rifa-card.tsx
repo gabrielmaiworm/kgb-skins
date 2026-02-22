@@ -8,7 +8,6 @@ import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { CampaignListItem } from "@/@types/campaings";
 import { FloatBar } from "./float-bar";
-import { useSession } from "next-auth/react";
 
 interface RifaCardProps {
   campaign: CampaignListItem;
@@ -49,7 +48,7 @@ export default function RifaCard({ campaign }: RifaCardProps) {
 
   return (
     <div className="group relative w-full">
-      <div className="glass-card">
+      <div className="glass-card h-full">
         <div className="glass-bg" />
         <div className="glass-blur" />
         <div className="glass-border" />
@@ -58,7 +57,7 @@ export default function RifaCard({ campaign }: RifaCardProps) {
           <div className="absolute inset-0 bg-gradient-to-r from-kgb-red via-kgb-gold to-kgb-red bg-size-200 animate-gradient-x blur-xl" />
         </div>
 
-        <div className="relative z-10 p-3 flex flex-col gap-2">
+        <div className="relative z-10 p-3 flex flex-col gap-2 h-full">
           <div className="flex items-center justify-between">
             {estaEncerrada ? (
               <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-quota-pago-bg backdrop-blur-sm border border-quota-pago-border">
@@ -157,43 +156,47 @@ export default function RifaCard({ campaign }: RifaCardProps) {
           )}
 
           {ganhador && dataSorteio && (
-            <div className="glass-card mb-2">
-              <div className="absolute inset-0 bg-gradient-to-r from-kgb-gold/20 to-kgb-red/20 backdrop-blur-sm" />
-              <div className="absolute inset-0 border border-kgb-gold/20 rounded-lg" />
+            <div className="flex flex-col gap-2 mt-auto">
+              <div className="glass-card mb-2 ">
+                <div className="absolute inset-0 bg-gradient-to-r from-kgb-gold/20 to-kgb-red/20 backdrop-blur-sm" />
+                <div className="absolute inset-0 border border-kgb-gold/20 rounded-lg" />
 
-              <div className="relative z-10 p-3 space-y-1">
-                <p className="body-caption text-text-muted">Ganhador:</p>
-                <p className="body-callout-bold text-kgb-gold">{ganhador}</p>
-                <p className="body-callout-bold text-text-muted">{bilhetePremiado}</p>
-                <p className="body-caption text-text-subtle">
-                  Sorteado{" "}
-                  {formatDistanceToNow(new Date(drawDate), {
-                    addSuffix: true,
-                    locale: ptBR,
-                  })}
-                </p>
+                <div className="relative z-10 p-3 space-y-1">
+                  <p className="body-callout-bold text-text-muted">Ganhador:</p>
+                  <p className="body-paragraph-bold text-kgb-gold">{ganhador}</p>
+                  <p className="body-paragraph-bold text-text-muted">{bilhetePremiado}</p>
+                  <p className="body-caption text-text-subtle">
+                    Sorteado{" "}
+                    {formatDistanceToNow(new Date(drawDate), {
+                      addSuffix: true,
+                      locale: ptBR,
+                    })}
+                  </p>
+                </div>
               </div>
+
+              <Link href={`/${id}`} className="mt-auto">
+                <Button variant="gold" size="full">
+                  <Trophy className="w-4 h-4" />
+                  Ver detalhes
+                </Button>
+              </Link>
             </div>
           )}
 
           {disponivel && rifasDisponiveis > 0 ? (
-            <Link href={`/${id}`}>
+            <Link href={`/${id}`} className="mt-auto">
               <Button variant="default" size="full">
                 Participar agora
               </Button>
             </Link>
-          ) : !ganhador ? (
-            <Button variant="outline" size="full" disabled>
-              <Lock className="w-4 h-4" />
-              Rifa encerrada
-            </Button>
           ) : (
-            <Link href={`/${id}`}>
-              <Button variant="gold" size="full">
-                <Trophy className="w-4 h-4" />
-                Ver detalhes
+            !ganhador && (
+              <Button variant="outline" size="full" disabled className="mt-auto">
+                <Lock className="w-4 h-4" />
+                Rifa encerrada
               </Button>
-            </Link>
+            )
           )}
         </div>
       </div>

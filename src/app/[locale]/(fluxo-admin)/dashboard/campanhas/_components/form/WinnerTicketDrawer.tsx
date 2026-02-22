@@ -7,7 +7,6 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerDescription,
-  DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -23,15 +22,20 @@ import { CampaignListItem } from "@/@types/campaings";
 interface WinnerTicketDrawerProps {
   campaign: CampaignListItem;
   onSuccess?: () => void;
-  children?: React.ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
 export const WinnerTicketDrawer = ({
   campaign,
   onSuccess,
-  children,
+  open: controlledOpen,
+  onOpenChange,
 }: WinnerTicketDrawerProps) => {
-  const [open, setOpen] = useState(false);
+  const [internalOpen, setInternalOpen] = useState(false);
+  const isControlled = controlledOpen !== undefined;
+  const open = isControlled ? controlledOpen : internalOpen;
+  const setOpen = isControlled ? (onOpenChange ?? (() => {})) : setInternalOpen;
   const [selectedNumber, setSelectedNumber] = useState<number | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -109,15 +113,7 @@ export const WinnerTicketDrawer = ({
     quota.status === "pago" || quota.status === "reservado" || quota.status === "livre";
 
   return (
-    <Drawer open={open} onOpenChange={setOpen} direction="right">
-      <DrawerTrigger asChild>
-        {children ?? (
-          <Button variant="outline" size="sm">
-            <Trophy className="w-4 h-4 mr-2" />
-            Definir vencedor
-          </Button>
-        )}
-      </DrawerTrigger>
+    <Drawer open={open} onOpenChange={(o) => setOpen(o)} direction="right">
       <DrawerContent
         className="h-full w-full overflow-y-auto [&[data-vaul-drawer-direction=right]]:!w-[min(100%,42rem)] [&[data-vaul-drawer-direction=right]]:!max-w-[42rem]"
       >

@@ -13,7 +13,6 @@ import {
   Package,
   Wrench,
   Gauge,
-  Sparkles,
   Zap,
 } from "lucide-react";
 import { priceMask } from "@/utils/input-masks";
@@ -145,17 +144,5 @@ export const EditFormInputs = ({
   control,
   defaultStatusValue,
 }: EditFormInputsProps): InputRenderProps<FormDataType>[] => {
-  const baseInputs = FormInputs(control, defaultStatusValue).filter((input) => input.id !== "is_free");
-  return [
-    ...baseInputs,
-    {
-      id: "winnerTicket",
-      label: "Ticket Vencedor",
-      placeholder: "Ex: 123",
-      type: "text",
-      icon: <Sparkles className="h-4 w-4" />,
-      control: control,
-      description: "Número do ticket vencedor (apenas para campanhas concluídas).",
-    },
-  ];
+  return FormInputs(control, defaultStatusValue).filter((input) => input.id !== "is_free");
 };

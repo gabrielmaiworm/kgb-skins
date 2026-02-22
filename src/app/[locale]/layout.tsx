@@ -39,7 +39,6 @@ export default async function RootLayout({
 
   return (
     <html className={`${GeistSans.variable}`} suppressHydrationWarning lang="pt-BR">
-      <Script defer data-domain="portal.cstbrasil.com" src="https://plausible.biomob.xyz/js/script.js" />
       <body className={""}>
         <Providers messages={messages} locale={resolvedParams.locale} session={session}>
           {children}

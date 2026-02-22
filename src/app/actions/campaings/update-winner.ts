@@ -62,7 +62,7 @@ export async function updateCampaignWinnerAction(
       formData.append("featured", String(campaign.featured));
     }
     formData.append("winnerTicket", String(winnerTicket));
-    formData.append("status", campaign.status || "COMPLETED");
+    formData.append("status", "COMPLETED"); // Ao definir vencedor, marca campanha como concluída
 
     if (campaign.prizeDescription) {
       formData.append("prizeDescription", campaign.prizeDescription);

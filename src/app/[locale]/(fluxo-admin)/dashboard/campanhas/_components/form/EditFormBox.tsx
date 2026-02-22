@@ -6,7 +6,7 @@ import { Control } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Form } from "@/components/ui/form";
-import { Box, Save, Users } from "lucide-react";
+import { Box, Save, Trophy, Users } from "lucide-react";
 import { FormDataType, editSchema } from "./schema";
 import { InputRender } from "@/components/form/input-render";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -26,6 +26,7 @@ const EditFormBox: React.FC<{
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }> = ({ setOpen }) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [isWinnerDrawerOpen, setIsWinnerDrawerOpen] = React.useState(false);
   const [state, formAction] = React.useActionState(updateCampaignAction, {
     message: "",
     success: false,
@@ -224,17 +225,8 @@ const EditFormBox: React.FC<{
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center justify-between gap-4 flex-wrap">
+            <CardTitle className="flex items-center gap-4">
               <SimpleTitleIcon icon={Users} title={"Informações gerais"} />
-              {campaignData && (
-                <WinnerTicketDrawer
-                  campaign={campaignData}
-                  onSuccess={() => {
-                    invalidateQuery();
-                    invalidateCampaignQuery();
-                  }}
-                />
-              )}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -252,6 +244,37 @@ const EditFormBox: React.FC<{
             </div>
           </CardContent>
         </Card>
+
+        {campaignData && (
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center justify-between gap-4 flex-wrap">
+                <SimpleTitleIcon icon={Trophy} title={"Definir vencedor"} />
+                <Button variant="outline" size="sm" onClick={() => setIsWinnerDrawerOpen(true)}>
+                  <Trophy className="w-4 h-4 mr-2" />
+                  Definir vencedor
+                </Button>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                Selecione o número vencedor da rifa. Ao confirmar, a campanha será marcada automaticamente como concluída.
+              </p>
+            </CardContent>
+          </Card>
+        )}
+
+        {campaignData && (
+          <WinnerTicketDrawer
+            campaign={campaignData}
+            open={isWinnerDrawerOpen}
+            onOpenChange={setIsWinnerDrawerOpen}
+            onSuccess={() => {
+              invalidateQuery();
+              invalidateCampaignQuery();
+            }}
+          />
+        )}
 
         <Button
           type="submit"
