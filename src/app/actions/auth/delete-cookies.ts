@@ -1,6 +1,6 @@
 "use server";
 
-import { cookies } from "next/dist/server/request/cookies";
+import { cookies } from "next/headers";
 
 export default async function deleteAuthCookies() {
   const cookiesStore = await cookies();
